@@ -22,7 +22,17 @@ const useEmployees = () => {
     setEmployees([...employees, employee]);
   };
 
-  return { employees, addEmployee };
+  const updateEmployee = (employee: EmployeeType) => {
+    const updatedEmployees = employees.map((emp) => {
+      if (emp.firstName === employee.firstName) {
+        return employee;
+      }
+      return emp;
+    });
+    setEmployees(updatedEmployees);
+  };
+
+  return { employees, addEmployee, updateEmployee };
 };
 
 export default useEmployees;

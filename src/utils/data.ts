@@ -1,3 +1,5 @@
+import { Entry } from "../pages/employees/employeesPage";
+
 export const statesList = [
     "Alabama",
     "Alaska",
@@ -57,4 +59,16 @@ export const departmentsList = [
     "Legal",
     "Marketing",
     "Sales",
+];
+
+export const entries: Entry[] = [
+    { label: "First Name", key: "firstName" },
+    { label: "Last Name", key: "lastName" },
+    { label: "Date of Birth", key: "dateOfBirth" },
+    { label: "Start Date", key: "startDate" },
+    { label: "Street", key: "street" },
+    { label: "City", key: "city" },
+    { label: "State", key: "state" },
+    { label: "Zip Code", key: "zipCode" },
+    { label: "Department", key: "department" },
 ];

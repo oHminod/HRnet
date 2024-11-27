@@ -1,23 +1,13 @@
 import { useState, useEffect } from "react";
 import useEmployees from "../../hooks/useEmployees";
 import { EmployeeType } from "../../utils/employeesContext";
+import { entries } from "../../utils/data";
+import UpdateEmployeePopOver from "./components/updateEmployeePopOver";
 
-interface Entry {
+export type Entry = {
   label: string;
   key: keyof EmployeeType;
-}
-
-const entries: Entry[] = [
-  { label: "First Name", key: "firstName" },
-  { label: "Last Name", key: "lastName" },
-  { label: "Date of Birth", key: "dateOfBirth" },
-  { label: "Start Date", key: "startDate" },
-  { label: "Street", key: "street" },
-  { label: "City", key: "city" },
-  { label: "State", key: "state" },
-  { label: "Zip Code", key: "zipCode" },
-  { label: "Department", key: "department" },
-];
+};
 
 type SortDirection = "ascending" | "descending" | "";
 interface SortConfig {
@@ -35,6 +25,17 @@ const EmployeesPage = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [selectedEmployee, setSelectedEmployee] = useState<EmployeeType | null>(
+    null
+  );
+  const [selectedField, setSelectedField] = useState<keyof EmployeeType | null>(
+    null
+  );
+  const [cursorPosition, setCursorPosition] = useState<{
+    x: number;
+    y: number;
+  }>({ x: 0, y: 0 });
+  const [popoverVisible, setPopoverVisible] = useState<boolean>(false);
 
   useEffect(() => {
     setSortedEmployees(employees);
@@ -163,9 +164,18 @@ const EmployeesPage = () => {
     }
   }
 
-  // Remove duplicates and sort the page numbers
-  //   const uniquePageNumbers = Array.from(new Set(pageNumbers));
-  //   uniquePageNumbers.sort((a, b) => a - b);
+  const handleCellClick = (
+    e: React.MouseEvent<HTMLTableCellElement, MouseEvent>,
+    employee: EmployeeType,
+    fieldKey: keyof EmployeeType
+  ) => {
+    const x = e.clientX;
+    const y = e.clientY;
+    setSelectedEmployee(employee);
+    setSelectedField(fieldKey);
+    setCursorPosition({ x, y });
+    setPopoverVisible(true);
+  };
 
   return (
     <>
@@ -210,7 +220,7 @@ const EmployeesPage = () => {
       </div>
 
       {/* Wrap the table in a div with overflow-x-auto */}
-      <div className="overflow-x-auto xl:overflow-x-visible">
+      <div className="overflow-x-auto xl:overflow-x-visible relative">
         <table className="border-collapse table-auto w-full text-sm">
           <thead className="bg-slate-200">
             <tr>
@@ -233,7 +243,8 @@ const EmployeesPage = () => {
                   {entries.map((entry) => (
                     <td
                       key={entry.key}
-                      className="border-b border-slate-100 p-4 pl-8 text-slate-500"
+                      className="border-b border-slate-100 p-4 pl-8 text-slate-500 cursor-pointer"
+                      onClick={(e) => handleCellClick(e, employee, entry.key)}
                     >
                       {employee[entry.key]}
                     </td>
@@ -253,7 +264,15 @@ const EmployeesPage = () => {
           </tbody>
         </table>
       </div>
-
+      {popoverVisible && selectedEmployee && selectedField && (
+        <UpdateEmployeePopOver
+          employee={selectedEmployee}
+          entryKey={selectedField}
+          cursorPosition={cursorPosition}
+          visible={popoverVisible}
+          onClose={() => setPopoverVisible(false)} // Ajoutez une prop pour fermer le popover
+        />
+      )}
       {/* Pagination controls */}
       <div className="flex flex-col sm:flex-row sm:justify-between items-end sm:items-center mt-4 gap-4">
         <button
