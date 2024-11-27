@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { departmentsList, statesList } from "../../utils/data";
 import useEmployees from "../../hooks/useEmployees";
+import Modal from "./componants/modal";
 
 const HomePage = () => {
   const [selectedState, setSelectedState] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const { addEmployee } = useEmployees();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,10 +31,12 @@ const HomePage = () => {
     e.currentTarget.reset();
     setSelectedState("");
     setSelectedDepartment("");
+    setIsOpenModal(true);
   };
 
   return (
     <>
+      {isOpenModal && <Modal setIsOpenModal={setIsOpenModal} />}
       <div className="border-2 p-6 rounded-xl">
         <h2 className="text-center text-lg font-semibold">Create employee</h2>
         <form onSubmit={handleSubmit}>
@@ -45,6 +49,7 @@ const HomePage = () => {
                   className="border-2 p-2 rounded-lg"
                   type="text"
                   placeholder="John"
+                  required
                 />
               </label>
               <label className="flex flex-wrap items-center gap-2">
@@ -54,6 +59,7 @@ const HomePage = () => {
                   className="border-2 p-2 rounded-lg"
                   type="text"
                   placeholder="Doe"
+                  required
                 />
               </label>
             </div>
@@ -64,6 +70,7 @@ const HomePage = () => {
                   name="dateOfBirth"
                   className="border-2 p-2 rounded-lg"
                   type="date"
+                  required
                 />
               </label>
               <label className="flex flex-wrap items-center gap-2">
@@ -72,6 +79,7 @@ const HomePage = () => {
                   name="startDate"
                   className="border-2 p-2 rounded-lg"
                   type="date"
+                  required
                 />
               </label>
             </div>
@@ -84,6 +92,7 @@ const HomePage = () => {
                   className="border-2 p-2 rounded-lg"
                   type="text"
                   placeholder="123 Main St"
+                  required
                 />
               </label>
               <label className="flex flex-wrap items-center gap-2">
@@ -93,6 +102,7 @@ const HomePage = () => {
                   className="border-2 p-2 rounded-lg"
                   type="text"
                   placeholder="Springfield"
+                  required
                 />
               </label>
             </div>
@@ -104,6 +114,7 @@ const HomePage = () => {
                   className="border-2 p-2 rounded-lg"
                   value={selectedState}
                   onChange={(e) => setSelectedState(e.target.value)}
+                  required
                 >
                   <option value="" disabled>
                     Choose State
@@ -122,6 +133,7 @@ const HomePage = () => {
                   className="border-2 p-2 rounded-lg"
                   type="text"
                   placeholder="62704"
+                  required
                 />
               </label>
             </div>
@@ -133,6 +145,7 @@ const HomePage = () => {
                 className="border-2 p-2 rounded-lg"
                 value={selectedDepartment}
                 onChange={(e) => setSelectedDepartment(e.target.value)}
+                required
               >
                 <option value="" disabled>
                   Choose Department
