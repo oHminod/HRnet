@@ -296,7 +296,7 @@ const EmployeesPage = () => {
               <button
                 key={item}
                 onClick={() => handlePageChange(item)}
-                className={`p-2 mx-1 rounded ${
+                className={`p-2 mx-1 rounded min-w-10 ${
                   currentPage === item
                     ? "bg-blue-500 text-white"
                     : "bg-gray-200 text-gray-700"

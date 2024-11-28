@@ -1,3 +1,5 @@
+import { CircleX } from "lucide-react";
+
 const Modal = ({
   setIsOpenModal,
 }: {
@@ -10,12 +12,17 @@ const Modal = ({
         onClick={() => setIsOpenModal(false)}
       ></div>
       <div
-        className="bg-white p-4 rounded-lg"
+        className="bg-white p-4 rounded-lg relative"
         onClick={(e) => e.stopPropagation()}
       >
-        <h2 className="text-xl font-semibold">Modal</h2>
-        <p>This is a modal</p>
-        <button onClick={() => setIsOpenModal(false)}>Close</button>
+        <h2 className="text-xl font-semibold">Success</h2>
+        <p>Employee Created!</p>
+        <button
+          className="absolute -top-[12px] -right-[12px] bg-white rounded-full p-1"
+          onClick={() => setIsOpenModal(false)}
+        >
+          <CircleX />
+        </button>
       </div>
     </div>
   );
