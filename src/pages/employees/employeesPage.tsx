@@ -130,35 +130,41 @@ const EmployeesPage = () => {
     indexOfLastEmployee
   );
 
-  const pageNumbers: (number | string)[] = [];
+  const pageNumbers: number[] = [];
 
-  if (totalPages <= 3) {
+  if (totalPages <= 5) {
     // If total pages are 3 or less, show all page numbers
     for (let i = 1; i <= totalPages; i++) {
       pageNumbers.push(i);
     }
   } else {
-    if (currentPage === 1) {
+    if (currentPage === 1 || currentPage === 2 || currentPage === 3) {
       // On first page
       pageNumbers.push(1);
       pageNumbers.push(2);
-      pageNumbers.push("...");
+      pageNumbers.push(3);
+      pageNumbers.push(4);
       pageNumbers.push(totalPages);
-    } else if (currentPage === totalPages) {
+    } else if (
+      currentPage === totalPages ||
+      currentPage === totalPages - 1 ||
+      currentPage === totalPages - 2
+    ) {
       // On last page
       pageNumbers.push(1);
-      pageNumbers.push("...");
+      pageNumbers.push(totalPages - 3);
+      pageNumbers.push(totalPages - 2);
       pageNumbers.push(totalPages - 1);
       pageNumbers.push(totalPages);
     } else {
       // On any other page
       pageNumbers.push(1);
-      if (currentPage > 2) {
-        pageNumbers.push("...");
+      if (currentPage > 3) {
+        pageNumbers.push(currentPage - 1);
       }
       pageNumbers.push(currentPage);
-      if (currentPage < totalPages - 1) {
-        pageNumbers.push("...");
+      if (currentPage < totalPages - 2) {
+        pageNumbers.push(currentPage + 1);
       }
       pageNumbers.push(totalPages);
     }
@@ -193,6 +199,7 @@ const EmployeesPage = () => {
             onChange={handleItemsPerPageChange}
             className="border rounded p-1"
           >
+            <option value={1}>1</option>
             <option value={2}>2</option>
             <option value={10}>10</option>
             <option value={25}>25</option>
@@ -219,7 +226,6 @@ const EmployeesPage = () => {
         </div>
       </div>
 
-      {/* Wrap the table in a div with overflow-x-auto */}
       <div className="overflow-x-auto xl:overflow-x-visible relative">
         <table className="border-collapse table-auto w-full text-sm">
           <thead className="bg-slate-200">
@@ -270,7 +276,7 @@ const EmployeesPage = () => {
           entryKey={selectedField}
           cursorPosition={cursorPosition}
           visible={popoverVisible}
-          onClose={() => setPopoverVisible(false)} // Ajoutez une prop pour fermer le popover
+          onClose={() => setPopoverVisible(false)} // Prop pour fermer le popover
         />
       )}
       {/* Pagination controls */}
@@ -281,11 +287,11 @@ const EmployeesPage = () => {
         >
           Reset initial order
         </button>
-        <div className="flex items-center order-1 sm:order-2">
+        <div className="flex flex-wrap items-center order-1 sm:order-2">
           <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            className={`p-2 mx-1 rounded-lg ${
+            className={`w-20 p-2 rounded-l-lg ${
               currentPage === 1 ? "bg-gray-300" : "bg-blue-500 text-white"
             }`}
           >
@@ -296,7 +302,7 @@ const EmployeesPage = () => {
               <button
                 key={item}
                 onClick={() => handlePageChange(item)}
-                className={`p-2 mx-1 rounded min-w-10 ${
+                className={`p-2 min-w-10 ${
                   currentPage === item
                     ? "bg-blue-500 text-white"
                     : "bg-gray-200 text-gray-700"
@@ -305,7 +311,10 @@ const EmployeesPage = () => {
                 {item}
               </button>
             ) : (
-              <span key={`ellipsis-${index}`} className="mx-1">
+              <span
+                key={`ellipsis-${index}`}
+                className="flex w-10 h-10 items-center justify-center bg-gray-200 text-gray-700"
+              >
                 {item}
               </span>
             )
@@ -313,7 +322,7 @@ const EmployeesPage = () => {
           <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages || totalPages === 0}
-            className={`p-2 mx-1 rounded-lg ${
+            className={`w-20 p-2 rounded-r-lg ${
               currentPage === totalPages || totalPages === 0
                 ? "bg-gray-300"
                 : "bg-blue-500 text-white"
