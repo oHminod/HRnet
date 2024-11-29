@@ -4,6 +4,7 @@ import { EmployeeType } from "../../utils/employeesContext";
 import { entries } from "../../utils/data";
 import UpdateEmployeePopOver from "./components/updateEmployeePopOver";
 import { CircleX } from "lucide-react";
+import Select from "../../components/Select";
 
 export type Entry = {
   label: string;
@@ -113,10 +114,8 @@ const EmployeesPage = () => {
   const totalEmployees = filteredEmployees.length;
   const totalPages = Math.ceil(totalEmployees / itemsPerPage);
 
-  const handleItemsPerPageChange = (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    setItemsPerPage(Number(e.target.value));
+  const handleItemsPerPageChange = (e: number) => {
+    setItemsPerPage(e);
     setCurrentPage(1); // Reset to first page when items per page changes
   };
 
@@ -194,7 +193,13 @@ const EmployeesPage = () => {
           <label htmlFor="itemsPerPage" className="mr-2">
             Show
           </label>
-          <select
+          <Select
+            defaultValue={itemsPerPage}
+            placeholder={itemsPerPage.toString()}
+            onOptionChange={(value) => handleItemsPerPageChange(value)}
+            options={[1, 2, 10, 25, 50, 100]}
+          />
+          {/* <select
             id="itemsPerPage"
             value={itemsPerPage}
             onChange={handleItemsPerPageChange}
@@ -206,7 +211,7 @@ const EmployeesPage = () => {
             <option value={25}>25</option>
             <option value={50}>50</option>
             <option value={100}>100</option>
-          </select>
+          </select> */}
           <span className="ml-2">entries</span>
         </div>
         {/* Champ de recherche */}

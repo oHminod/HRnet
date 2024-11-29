@@ -2,9 +2,10 @@ import { useState } from "react";
 import { departmentsList, statesList } from "../../utils/data";
 import useEmployees from "../../hooks/useEmployees";
 import Modal from "./componants/modal";
+import Select from "../../components/Select";
 
 const HomePage = () => {
-  const [selectedState, setSelectedState] = useState("");
+  const [selectedState, setSelectedState] = useState("Choose State");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { addEmployee } = useEmployees();
@@ -26,10 +27,13 @@ const HomePage = () => {
       department: formData.get("department") as string,
     };
     console.log("form content", form);
+    if (form.state === "Choose State" || form.department === "") {
+      return;
+    }
     addEmployee(form);
 
     e.currentTarget.reset();
-    setSelectedState("");
+    // setSelectedState("");
     setSelectedDepartment("");
     setIsOpenModal(true);
   };
@@ -109,7 +113,14 @@ const HomePage = () => {
             <div className="flex flex-wrap gap-4">
               <label className="flex flex-wrap items-center gap-2">
                 <span>State</span>
-                <select
+                <Select
+                  options={statesList}
+                  placeholder="Choose State"
+                  name="state"
+                  defaultValue={selectedState}
+                  onOptionChange={(value) => setSelectedState(value)}
+                />
+                {/* <select
                   name="state"
                   className="border-2 p-2 rounded-lg"
                   value={selectedState}
@@ -124,7 +135,7 @@ const HomePage = () => {
                       {state}
                     </option>
                   ))}
-                </select>
+                </select> */}
               </label>
               <label className="flex flex-wrap items-center gap-2">
                 <span>Zip Code</span>
@@ -140,7 +151,14 @@ const HomePage = () => {
             <h3 className="font-semibold pt-8">Department</h3>
             <label className="flex flex-wrap items-center gap-2">
               <span>Department</span>
-              <select
+              <Select
+                options={departmentsList}
+                placeholder="Choose Department"
+                name="department"
+                defaultValue={selectedDepartment}
+                onOptionChange={(value) => setSelectedDepartment(value)}
+              />
+              {/* <select
                 name="department"
                 className="border-2 p-2 rounded-lg"
                 value={selectedDepartment}
@@ -155,7 +173,7 @@ const HomePage = () => {
                     {department}
                   </option>
                 ))}
-              </select>
+              </select> */}
             </label>
           </div>
           <div className="flex justify-center w-full">
