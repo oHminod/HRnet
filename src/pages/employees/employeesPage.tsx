@@ -304,7 +304,9 @@ const EmployeesPage = () => {
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
             className={`w-20 p-2 rounded-l-lg ${
-              currentPage === 1 ? "bg-gray-300" : "bg-blue-500 text-white"
+              currentPage === 1
+                ? "bg-gray-300 hover:cursor-not-allowed"
+                : "bg-blue-500 text-white"
             }`}
           >
             Previous
@@ -317,7 +319,7 @@ const EmployeesPage = () => {
                 className={`p-2 min-w-10 ${
                   currentPage === item
                     ? "bg-blue-500 text-white"
-                    : "bg-gray-200 text-gray-700"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               >
                 {item}
@@ -336,7 +338,7 @@ const EmployeesPage = () => {
             disabled={currentPage === totalPages || totalPages === 0}
             className={`w-20 p-2 rounded-r-lg ${
               currentPage === totalPages || totalPages === 0
-                ? "bg-gray-300"
+                ? "bg-gray-300 hover:cursor-not-allowed"
                 : "bg-blue-500 text-white"
             }`}
           >
