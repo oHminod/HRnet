@@ -3,6 +3,7 @@ import useEmployees from "../../hooks/useEmployees";
 import { EmployeeType } from "../../utils/employeesContext";
 import { entries } from "../../utils/data";
 import UpdateEmployeePopOver from "./components/updateEmployeePopOver";
+import { CircleX } from "lucide-react";
 
 export type Entry = {
   label: string;
@@ -209,7 +210,7 @@ const EmployeesPage = () => {
           <span className="ml-2">entries</span>
         </div>
         {/* Champ de recherche */}
-        <div>
+        <div className="relative">
           <label htmlFor="search" className="mr-2">
             Search :
           </label>
@@ -221,8 +222,14 @@ const EmployeesPage = () => {
               setSearchTerm(e.target.value);
               setCurrentPage(1); // Reset to first page after search
             }}
-            className="border rounded p-1"
+            className="border rounded w-44 p-1 pr-7"
           />
+          {searchTerm && (
+            <CircleX
+              className="absolute right-1 top-[5px] cursor-pointer hover:text-red-500"
+              onClick={() => setSearchTerm("")}
+            />
+          )}
         </div>
       </div>
 
