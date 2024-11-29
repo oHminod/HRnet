@@ -134,7 +134,7 @@ const EmployeesPage = () => {
   const pageNumbers: number[] = [];
 
   if (totalPages <= 5) {
-    // If total pages are 3 or less, show all page numbers
+    // If total pages are 5 or less, show all page numbers
     for (let i = 1; i <= totalPages; i++) {
       pageNumbers.push(i);
     }
