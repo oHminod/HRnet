@@ -1,3 +1,4 @@
+// useLocaleStorage.tsx
 import { useState, useEffect } from "react";
 
 function useLocalStorage<T>(

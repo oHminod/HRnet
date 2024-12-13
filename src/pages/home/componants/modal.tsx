@@ -1,3 +1,4 @@
+// modal.tsx
 import { CircleX } from "lucide-react";
 
 const Modal = ({

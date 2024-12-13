@@ -1,3 +1,4 @@
+// routes.tsx
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import HomePage from "../pages/home/homePage";
 import EmployeesPage from "../pages/employees/employeesPage";

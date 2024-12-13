@@ -1,3 +1,4 @@
+// data.ts
 import { Entry } from "../pages/employees/employeesPage";
 
 export const statesList = [
