@@ -14,6 +14,7 @@ const HomePage = () => {
   const [error, setError] = useState("");
   const { addEmployee } = useEmployees();
   const [resetKey, setResetKey] = useState(0);
+  const [zipCode, setZipCode] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,10 +37,28 @@ const HomePage = () => {
       setError("Please select a state and department");
       return;
     }
-    if (form.dateOfBirth === "" || form.startDate === "") {
-      setError("Please select a date of birth and start date");
+    const today = new Date();
+    const birthDate = new Date(form.dateOfBirth);
+    const startDate = new Date(form.startDate);
+    const age = today.getFullYear() - birthDate.getFullYear();
+    const monthDiff = today.getMonth() - birthDate.getMonth();
+
+    if (
+      form.dateOfBirth === "" ||
+      form.startDate === "" ||
+      form.dateOfBirth.length !== 10 ||
+      form.startDate.length !== 10 ||
+      birthDate >= startDate ||
+      age < 18 ||
+      (age === 18 && monthDiff < 0) ||
+      (age === 18 && monthDiff === 0 && today.getDate() < birthDate.getDate())
+    ) {
+      setError(
+        "Please select a valid date of birth and start date. Employee must be at least 18 years old."
+      );
       return;
     }
+    if (error) setError("");
     addEmployee(form);
 
     e.currentTarget.reset();
@@ -49,6 +68,15 @@ const HomePage = () => {
 
   const handleReset = () => {
     setResetKey((prev) => prev + 1); // On force le remount
+  };
+
+  const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (isNaN(Number(value))) {
+      setZipCode("");
+    } else {
+      setZipCode(value);
+    }
   };
 
   return (
@@ -132,6 +160,8 @@ const HomePage = () => {
                   className="border-2 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="62704"
+                  value={zipCode}
+                  onChange={handleZipCodeChange}
                   required
                 />
               </label>
