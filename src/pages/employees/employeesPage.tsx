@@ -101,7 +101,9 @@ const EmployeesPage = () => {
                       className="border-b border-slate-100 p-4 pl-8 text-slate-500 cursor-pointer"
                       onClick={(e) => handleCellClick(e, employee, entry.key)}
                     >
-                      {employee[entry.key]}
+                      {entry.key === "dateOfBirth" || entry.key === "startDate"
+                        ? employee[entry.key].split("-").reverse().join("/")
+                        : employee[entry.key]}
                     </td>
                   ))}
                 </tr>
