@@ -104,6 +104,13 @@ const UpdateEmployeePopOver = ({
     setInputBuffer(e.target.value);
   };
 
+  const handlezipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (value.length <= 5 && !isNaN(Number(value))) {
+      setInputBuffer(value);
+    }
+  };
+
   const dynamicInput = (entryKey: keyof EmployeeType) => {
     if (entryKey === "department") {
       return (
@@ -141,6 +148,17 @@ const UpdateEmployeePopOver = ({
             </option>
           ))}
         </select>
+      );
+    }
+    if (entryKey === "zipCode") {
+      return (
+        <input
+          type="text"
+          value={inputBuffer}
+          onChange={handlezipCodeChange}
+          placeholder={entryKey}
+          className="border p-1 rounded"
+        />
       );
     }
     return (

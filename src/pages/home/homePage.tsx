@@ -62,19 +62,19 @@ const HomePage = () => {
     addEmployee(form);
 
     e.currentTarget.reset();
+    setZipCode("");
     setResetKey((prev) => prev + 1); // On force le remount
     setIsOpenModal(true);
   };
 
   const handleReset = () => {
+    setZipCode("");
     setResetKey((prev) => prev + 1); // On force le remount
   };
 
   const handleZipCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    if (isNaN(Number(value))) {
-      setZipCode("");
-    } else {
+    if (value.length <= 5 && !isNaN(Number(value))) {
       setZipCode(value);
     }
   };
