@@ -4,11 +4,13 @@ import { departmentsList, statesList } from "../../utils/data";
 import useEmployees from "../../hooks/useEmployees";
 import Modal from "./componants/modal";
 import Select from "../../components/Select";
+import DatePicker from "../../components/datePicker/DatePicker";
 
 const HomePage = () => {
   const [selectedState, setSelectedState] = useState("Choose State");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [error, setError] = useState("");
   const { addEmployee } = useEmployees();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,6 +31,11 @@ const HomePage = () => {
     };
     console.log("form content", form);
     if (form.state === "Choose State" || form.department === "") {
+      setError("Please select a state and department");
+      return;
+    }
+    if (form.dateOfBirth === "" || form.startDate === "") {
+      setError("Please select a date of birth and start date");
       return;
     }
     addEmployee(form);
@@ -71,21 +78,31 @@ const HomePage = () => {
             <div className="flex flex-wrap gap-4">
               <label className="flex flex-wrap items-center gap-2">
                 <span>Date of Birth</span>
-                <input
+                <DatePicker
+                  name="dateOfBirth"
+                  // className="border-2 p-2 rounded-lg"
+                  // required
+                />
+                {/* <input
                   name="dateOfBirth"
                   className="border-2 p-2 rounded-lg"
                   type="date"
                   required
-                />
+                /> */}
               </label>
               <label className="flex flex-wrap items-center gap-2">
                 <span>Start Date</span>
-                <input
+                <DatePicker
+                  name="startDate"
+                  // className="border-2 p-2 rounded-lg"
+                  // required
+                />
+                {/* <input
                   name="startDate"
                   className="border-2 p-2 rounded-lg"
                   type="date"
                   required
-                />
+                /> */}
               </label>
             </div>
             <h3 className="font-semibold pt-8">Address</h3>
@@ -177,6 +194,7 @@ const HomePage = () => {
               </select> */}
             </label>
           </div>
+          {error && <p className="text-red-500">{error}</p>}
           <div className="flex justify-center w-full">
             <button
               type="submit"

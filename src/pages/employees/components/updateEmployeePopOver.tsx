@@ -4,6 +4,7 @@ import useEmployees from "../../../hooks/useEmployees";
 import { EmployeeType } from "../../../utils/employeesContext";
 import { CircleX } from "lucide-react";
 import { departmentsList, statesList } from "../../../utils/data";
+import DatePicker from "../../../components/datePicker/DatePicker";
 
 interface UpdateEmployeePopOverProps {
   employee: EmployeeType;
@@ -110,12 +111,16 @@ const UpdateEmployeePopOver = ({
     }
     if (entryKey === "dateOfBirth" || entryKey === "startDate") {
       return (
-        <input
-          type="date"
+        <DatePicker
           value={inputBuffer}
-          onChange={handleInputChange}
-          className="border p-1 rounded"
+          onChange={(date) => setInputBuffer(date)}
         />
+        // <input
+        //   type="date"
+        //   value={inputBuffer}
+        //   onChange={handleInputChange}
+        //   className="border p-1 rounded"
+        // />
       );
     }
     if (entryKey === "state") {
