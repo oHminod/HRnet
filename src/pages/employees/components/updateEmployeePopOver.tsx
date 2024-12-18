@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import useEmployees from "../../../hooks/useEmployees";
 import { EmployeeType } from "../../../utils/employeesContext";
-import { CircleX } from "lucide-react";
+import { CircleCheck, CircleX } from "lucide-react";
 import { departmentsList, statesList } from "../../../utils/data";
 import DatePicker from "../../../components/datePicker/DatePicker";
 
@@ -32,14 +32,24 @@ const UpdateEmployeePopOver = ({
     left: cursorPosition.x,
   });
 
+  const updateEmp = () => {
+    if (inputBuffer !== employee[entryKey]) {
+      updateEmployee({ ...employee, [entryKey]: inputBuffer });
+      onClose();
+    }
+  };
+
+  const handleClickCheck = () => {
+    updateEmp();
+  };
+
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         onClose();
       }
       if (e.key === "Enter") {
-        updateEmployee({ ...employee, [entryKey]: inputBuffer });
-        onClose();
+        updateEmp();
       }
     };
 
@@ -58,6 +68,7 @@ const UpdateEmployeePopOver = ({
       document.removeEventListener("keydown", handleKeyPress);
       document.removeEventListener("mousedown", handleClickOutside);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [employee, entryKey, inputBuffer, updateEmployee, onClose]);
 
   useEffect(() => {
@@ -115,12 +126,6 @@ const UpdateEmployeePopOver = ({
           value={inputBuffer}
           onChange={(date) => setInputBuffer(date)}
         />
-        // <input
-        //   type="date"
-        //   value={inputBuffer}
-        //   onChange={handleInputChange}
-        //   className="border p-1 rounded"
-        // />
       );
     }
     if (entryKey === "state") {
@@ -158,8 +163,11 @@ const UpdateEmployeePopOver = ({
       style={{ top: popoverPosition.top, left: popoverPosition.left }}
     >
       {dynamicInput(entryKey)}
-      <button onClick={() => onClose()}>
+      <button onClick={() => onClose()} className="hover:text-red-700">
         <CircleX />
+      </button>
+      <button onClick={handleClickCheck} className="hover:text-green-700">
+        <CircleCheck />{" "}
       </button>
     </div>
   );
