@@ -1,5 +1,6 @@
 // DatePicker.tsx
 import { Calendar } from "lucide-react";
+import { useRef, useCallback, useState } from "react";
 import { useDatePicker } from "./utils/useDatePicker";
 
 interface DatePickerProps {
@@ -22,11 +23,18 @@ const DatePicker = ({
     currentMonth,
     datepickerRef,
     toggleDatepicker,
-    handleInputChange,
+    handleInputChange: originalHandleInputChange,
     renderDays,
     goToPreviousMonth,
     goToNextMonth,
   } = useDatePicker({ initialValue: value, onChange });
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  // Cet état servira à verrouiller la sélection.
+  // true : la sélection complète est forcée au survol et clic initial.
+  // false : dès que l'utilisateur tape, on le met à false et on n'applique plus la contrainte.
+  const [selectionLocked, setSelectionLocked] = useState(true);
 
   const formatDate = (date: Date): string => {
     const year = date.getFullYear();
@@ -35,15 +43,49 @@ const DatePicker = ({
     return `${year}-${month}-${day}`;
   };
 
+  const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
+    event.target.select();
+    setSelectionLocked(true); // On verrouille la sélection au focus
+  };
+
+  const handleMouseUp = (event: React.MouseEvent<HTMLInputElement>) => {
+    // Empêcher la sélection partielle à la souris en annulant le mouseup si locked
+    if (selectionLocked) {
+      event.preventDefault();
+    }
+  };
+
+  const handleSelect = useCallback(() => {
+    // Si la sélection est verrouillée, on s'assure que tout est toujours sélectionné
+    if (selectionLocked && inputRef.current) {
+      const input = inputRef.current;
+      const { selectionStart, selectionEnd, value } = input;
+      if (selectionStart !== 0 || selectionEnd !== value.length) {
+        input.select();
+      }
+    }
+  }, [selectionLocked]);
+
+  // Une fois que l'utilisateur tape, on libère le verrou, on le réactive quand la date est complète
+  const handleInputChange = (val: string) => {
+    if (val.length >= 10) setSelectionLocked(true);
+    if (val.length < 10) setSelectionLocked(false);
+    originalHandleInputChange(val);
+  };
+
   return (
     <div className="relative inline-block w-44" ref={datepickerRef}>
       <div className="flex">
         <input
+          ref={inputRef}
           type="text"
           value={inputValue}
           placeholder={placeholder}
           className="border-2 border-r-1 p-2 rounded-l-lg px-4 py-2 w-full focus:outline-none hover:bg-gray-100"
           onChange={(e) => handleInputChange(e.target.value)}
+          onFocus={handleFocus}
+          onMouseUp={handleMouseUp}
+          onSelect={handleSelect}
         />
         <button
           type="button"

@@ -1,4 +1,5 @@
 // useDatePicker.tsx
+
 import { useState, useRef, useEffect, useCallback } from "react";
 import { parseDateFromInput } from "./parseDate";
 
@@ -6,6 +7,35 @@ interface UseDatePickerProps {
   initialValue?: string;
   onChange?: (value: string) => void;
 }
+
+const isLeapYear = (year: number) => {
+  return year % 400 === 0 || (year % 100 !== 0 && year % 4 === 0);
+};
+
+const validateDate = (day: number, month: number, year: number) => {
+  if (year < 1 || month < 0 || month > 11 || day < 1) return false;
+
+  const daysInMonth = [
+    31,
+    isLeapYear(year) ? 29 : 28,
+    31,
+    30,
+    31,
+    30,
+    31,
+    31,
+    30,
+    31,
+    30,
+    31,
+  ];
+
+  if (day > daysInMonth[month]) {
+    return false;
+  }
+
+  return true;
+};
 
 export const useDatePicker = ({
   initialValue,
@@ -33,6 +63,11 @@ export const useDatePicker = ({
     const day = parseInt(parts[0], 10);
     const month = parseInt(parts[1], 10) - 1;
     const year = parseInt(parts[2], 10);
+
+    if (!validateDate(day, month, year)) {
+      return null;
+    }
+
     const date = new Date(year, month, day);
     if (
       date.getFullYear() === year &&
@@ -85,19 +120,27 @@ export const useDatePicker = ({
         return;
       }
 
-      // Limiter l'entrée à 8 chiffres (JJMMAAAA) sans compter les '/'
-      const digits = input.replace(/\D/g, "").slice(0, 8);
-      const formattedInput = parseDateFromInput(digits);
+      const formattedInput = parseDateFromInput(input);
 
       setInputValue(formattedInput);
 
-      // Tenter de parse la date complète si possible
-      const date = parseInputDate(formattedInput);
-      if (date) {
-        setSelectedDate(date);
-        setCurrentMonth(date);
-        if (onChange) onChange(formatDate(date));
+      // Si on a la longueur complète (JJ/MM/AAAA)
+      const digits = formattedInput.replace(/\D/g, "");
+      if (digits.length === 8) {
+        // Tenter de parse la date complète si possible
+        const date = parseInputDate(formattedInput);
+        if (date) {
+          setSelectedDate(date);
+          setCurrentMonth(date);
+          if (onChange) onChange(formatDate(date));
+        } else {
+          // Date invalide, on réinitialise
+          setSelectedDate(null);
+          setInputValue("");
+          if (onChange) onChange("");
+        }
       } else {
+        // Pas encore 8 chiffres, on ne valide pas encore
         setSelectedDate(null);
         if (onChange) onChange("");
       }
