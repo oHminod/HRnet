@@ -8,7 +8,9 @@ const Header = () => {
         <Link className="text-2xl font-bold" to="/">
           HRnet
         </Link>
-        <Link to="/employees">Current employees</Link>
+        <Link to="/employees" className="hover:underline underline-offset-4">
+          Current employees
+        </Link>
       </nav>
     </header>
   );
