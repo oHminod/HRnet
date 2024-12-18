@@ -7,15 +7,15 @@ import Select from "../../components/Select";
 import DatePicker from "../../components/datePicker/DatePicker";
 
 const HomePage = () => {
-  const [selectedState, setSelectedState] = useState("Choose State");
+  const [selectedState, setSelectedState] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [error, setError] = useState("");
   const { addEmployee } = useEmployees();
+  const [resetKey, setResetKey] = useState(0);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Form submitted");
     const formData = new FormData(e.currentTarget);
 
     const form = {
@@ -29,7 +29,7 @@ const HomePage = () => {
       zipCode: formData.get("zipCode") as string,
       department: formData.get("department") as string,
     };
-    console.log("form content", form);
+
     if (form.state === "Choose State" || form.department === "") {
       setError("Please select a state and department");
       return;
@@ -41,9 +41,12 @@ const HomePage = () => {
     addEmployee(form);
 
     e.currentTarget.reset();
-    // setSelectedState("");
     setSelectedDepartment("");
     setIsOpenModal(true);
+  };
+
+  const handleReset = () => {
+    setResetKey((prev) => prev + 1); // On force le remount
   };
 
   return (
@@ -78,31 +81,11 @@ const HomePage = () => {
             <div className="flex flex-wrap gap-4">
               <label className="flex flex-wrap items-center gap-2">
                 <span>Date of Birth</span>
-                <DatePicker
-                  name="dateOfBirth"
-                  // className="border-2 p-2 rounded-lg"
-                  // required
-                />
-                {/* <input
-                  name="dateOfBirth"
-                  className="border-2 p-2 rounded-lg"
-                  type="date"
-                  required
-                /> */}
+                <DatePicker name="dateOfBirth" key={`date1-${resetKey}`} />
               </label>
               <label className="flex flex-wrap items-center gap-2">
                 <span>Start Date</span>
-                <DatePicker
-                  name="startDate"
-                  // className="border-2 p-2 rounded-lg"
-                  // required
-                />
-                {/* <input
-                  name="startDate"
-                  className="border-2 p-2 rounded-lg"
-                  type="date"
-                  required
-                /> */}
+                <DatePicker name="startDate" key={`date2-${resetKey}`} />
               </label>
             </div>
             <h3 className="font-semibold pt-8">Address</h3>
@@ -137,23 +120,8 @@ const HomePage = () => {
                   name="state"
                   defaultValue={selectedState}
                   onOptionChange={(value) => setSelectedState(value)}
+                  key={`select1-${resetKey}`}
                 />
-                {/* <select
-                  name="state"
-                  className="border-2 p-2 rounded-lg"
-                  value={selectedState}
-                  onChange={(e) => setSelectedState(e.target.value)}
-                  required
-                >
-                  <option value="" disabled>
-                    Choose State
-                  </option>
-                  {statesList.map((state) => (
-                    <option key={state} value={state}>
-                      {state}
-                    </option>
-                  ))}
-                </select> */}
               </label>
               <label className="flex flex-wrap items-center gap-2">
                 <span>Zip Code</span>
@@ -175,27 +143,19 @@ const HomePage = () => {
                 name="department"
                 defaultValue={selectedDepartment}
                 onOptionChange={(value) => setSelectedDepartment(value)}
+                key={`select2-${resetKey}`}
               />
-              {/* <select
-                name="department"
-                className="border-2 p-2 rounded-lg"
-                value={selectedDepartment}
-                onChange={(e) => setSelectedDepartment(e.target.value)}
-                required
-              >
-                <option value="" disabled>
-                  Choose Department
-                </option>
-                {departmentsList.map((department) => (
-                  <option key={department} value={department}>
-                    {department}
-                  </option>
-                ))}
-              </select> */}
             </label>
           </div>
           {error && <p className="text-red-500">{error}</p>}
           <div className="flex justify-center w-full">
+            <button
+              type="reset"
+              className="w-28 bg-gray-400 text-white p-2 mb-4 rounded-lg mr-4"
+              onClick={handleReset}
+            >
+              Cancel
+            </button>
             <button
               type="submit"
               className="w-28 bg-blue-500 text-white p-2 mb-4 rounded-lg"

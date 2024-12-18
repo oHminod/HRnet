@@ -1,4 +1,4 @@
-// Nouvelle logique de parsing avec gestion des cas particuliers
+// parrseDate.ts
 export const parseDateFromInput = (rawInput: string): string => {
     const digits = rawInput.replace(/\D/g, "");
     let day = "";

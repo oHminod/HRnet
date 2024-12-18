@@ -47,10 +47,12 @@ const CustomSelect = <T extends string | number>({
   return (
     <div className="relative inline-block" ref={dropdownRef}>
       <div
-        className="border border-gray-400 bg-white rounded shadow cursor-pointer flex justify-between items-center px-4 py-2"
+        className="border-2 p-2 rounded-lg cursor-pointer flex justify-between items-center px-4 py-2"
         onClick={() => setIsOpen((prev) => !prev)}
       >
-        <span>{selectedValue !== undefined ? selectedValue : placeholder}</span>
+        <span className={selectedValue !== undefined ? "" : "text-gray-400"}>
+          {selectedValue !== undefined ? selectedValue : placeholder}
+        </span>
         <svg
           className={`fill-current h-4 w-4 ml-2 transform transition-transform ${
             isOpen ? "rotate-180" : ""
