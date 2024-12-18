@@ -1,188 +1,36 @@
-// employeesPage.tsx
-import { useState, useEffect } from "react";
-import useEmployees from "../../hooks/useEmployees";
 import { EmployeeType } from "../../utils/employeesContext";
 import { entries } from "../../utils/data";
 import UpdateEmployeePopOver from "./components/updateEmployeePopOver";
 import { CircleX } from "lucide-react";
 import Select from "../../components/Select";
+import { useEmployeesPage } from "./components/useEmployeesPage";
 
 export type Entry = {
   label: string;
   key: keyof EmployeeType;
 };
 
-type SortDirection = "ascending" | "descending" | "";
-interface SortConfig {
-  key: keyof EmployeeType | null;
-  direction: SortDirection;
-}
-
 const EmployeesPage = () => {
-  const { employees } = useEmployees();
-  const [sortedEmployees, setSortedEmployees] = useState<EmployeeType[]>([]);
-  const [sortConfig, setSortConfig] = useState<SortConfig>({
-    key: null,
-    direction: "",
-  });
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [itemsPerPage, setItemsPerPage] = useState<number>(10);
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [selectedEmployee, setSelectedEmployee] = useState<EmployeeType | null>(
-    null
-  );
-  const [selectedField, setSelectedField] = useState<keyof EmployeeType | null>(
-    null
-  );
-  const [cursorPosition, setCursorPosition] = useState<{
-    x: number;
-    y: number;
-  }>({ x: 0, y: 0 });
-  const [popoverVisible, setPopoverVisible] = useState<boolean>(false);
-
-  useEffect(() => {
-    setSortedEmployees(employees);
-  }, [employees]);
-
-  const onSort = (key: keyof EmployeeType) => {
-    let direction: SortDirection = "ascending";
-    if (sortConfig.key === key && sortConfig.direction === "ascending") {
-      direction = "descending";
-    }
-    const sorted = [...employees].sort((a, b) => {
-      if (key === "dateOfBirth" || key === "startDate") {
-        const dateA = new Date(a[key]);
-        const dateB = new Date(b[key]);
-        if (dateA < dateB) {
-          return direction === "ascending" ? -1 : 1;
-        }
-        if (dateA > dateB) {
-          return direction === "ascending" ? 1 : -1;
-        }
-        return 0;
-      } else if (key === "zipCode") {
-        const numA = parseInt(a[key]);
-        const numB = parseInt(b[key]);
-        if (numA < numB) {
-          return direction === "ascending" ? -1 : 1;
-        }
-        if (numA > numB) {
-          return direction === "ascending" ? 1 : -1;
-        }
-        return 0;
-      } else {
-        const valueA = a[key].toLowerCase();
-        const valueB = b[key].toLowerCase();
-        if (valueA < valueB) {
-          return direction === "ascending" ? -1 : 1;
-        }
-        if (valueA > valueB) {
-          return direction === "ascending" ? 1 : -1;
-        }
-        return 0;
-      }
-    });
-    setSortedEmployees(sorted);
-    setSortConfig({ key, direction });
-    setCurrentPage(1); // Reset to first page after sorting
-  };
-
-  const resetSort = () => {
-    setSortedEmployees(employees);
-    setSortConfig({ key: null, direction: "" });
-    setCurrentPage(1); // Reset to first page after reset
-  };
-
-  const getSortIcon = (key: keyof EmployeeType) => {
-    if (sortConfig.key === key) {
-      return sortConfig.direction === "ascending" ? " ▲" : " ▼";
-    } else {
-      return " ▾";
-    }
-  };
-
-  // Filter logic
-  const filteredEmployees = sortedEmployees.filter((employee) =>
-    entries.some((entry) =>
-      employee[entry.key]
-        .toString()
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase())
-    )
-  );
-
-  // Pagination logic
-  const totalEmployees = filteredEmployees.length;
-  const totalPages = Math.ceil(totalEmployees / itemsPerPage);
-
-  const handleItemsPerPageChange = (e: number) => {
-    setItemsPerPage(e);
-    setCurrentPage(1); // Reset to first page when items per page changes
-  };
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
-
-  const indexOfLastEmployee = currentPage * itemsPerPage;
-  const indexOfFirstEmployee = indexOfLastEmployee - itemsPerPage;
-  const currentEmployees = filteredEmployees.slice(
-    indexOfFirstEmployee,
-    indexOfLastEmployee
-  );
-
-  const pageNumbers: number[] = [];
-
-  if (totalPages <= 5) {
-    // If total pages are 5 or less, show all page numbers
-    for (let i = 1; i <= totalPages; i++) {
-      pageNumbers.push(i);
-    }
-  } else {
-    if (currentPage === 1 || currentPage === 2 || currentPage === 3) {
-      // On first page
-      pageNumbers.push(1);
-      pageNumbers.push(2);
-      pageNumbers.push(3);
-      pageNumbers.push(4);
-      pageNumbers.push(totalPages);
-    } else if (
-      currentPage === totalPages ||
-      currentPage === totalPages - 1 ||
-      currentPage === totalPages - 2
-    ) {
-      // On last page
-      pageNumbers.push(1);
-      pageNumbers.push(totalPages - 3);
-      pageNumbers.push(totalPages - 2);
-      pageNumbers.push(totalPages - 1);
-      pageNumbers.push(totalPages);
-    } else {
-      // On any other page
-      pageNumbers.push(1);
-      if (currentPage > 3) {
-        pageNumbers.push(currentPage - 1);
-      }
-      pageNumbers.push(currentPage);
-      if (currentPage < totalPages - 2) {
-        pageNumbers.push(currentPage + 1);
-      }
-      pageNumbers.push(totalPages);
-    }
-  }
-
-  const handleCellClick = (
-    e: React.MouseEvent<HTMLTableCellElement, MouseEvent>,
-    employee: EmployeeType,
-    fieldKey: keyof EmployeeType
-  ) => {
-    const x = e.clientX;
-    const y = e.clientY;
-    setSelectedEmployee(employee);
-    setSelectedField(fieldKey);
-    setCursorPosition({ x, y });
-    setPopoverVisible(true);
-  };
+  const {
+    currentEmployees,
+    pageNumbers,
+    currentPage,
+    totalPages,
+    itemsPerPage,
+    searchTerm,
+    popoverVisible,
+    selectedEmployee,
+    selectedField,
+    cursorPosition,
+    onSort,
+    resetSort,
+    getSortIcon,
+    handleItemsPerPageChange,
+    handlePageChange,
+    handleCellClick,
+    setSearchTerm,
+    closePopover,
+  } = useEmployeesPage({ entries });
 
   return (
     <>
@@ -200,19 +48,6 @@ const EmployeesPage = () => {
             onOptionChange={(value) => handleItemsPerPageChange(value)}
             options={[1, 2, 10, 25, 50, 100]}
           />
-          {/* <select
-            id="itemsPerPage"
-            value={itemsPerPage}
-            onChange={handleItemsPerPageChange}
-            className="border rounded p-1"
-          >
-            <option value={1}>1</option>
-            <option value={2}>2</option>
-            <option value={10}>10</option>
-            <option value={25}>25</option>
-            <option value={50}>50</option>
-            <option value={100}>100</option>
-          </select> */}
           <span className="ml-2">entries</span>
         </div>
         {/* Champ de recherche */}
@@ -226,7 +61,7 @@ const EmployeesPage = () => {
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
-              setCurrentPage(1); // Reset to first page after search
+              handlePageChange(1); // Reset to first page after search
             }}
             className="border rounded w-44 p-1 pr-7"
           />
@@ -289,7 +124,7 @@ const EmployeesPage = () => {
           entryKey={selectedField}
           cursorPosition={cursorPosition}
           visible={popoverVisible}
-          onClose={() => setPopoverVisible(false)} // Prop pour fermer le popover
+          onClose={closePopover} // Prop pour fermer le popover
         />
       )}
       {/* Pagination controls */}
