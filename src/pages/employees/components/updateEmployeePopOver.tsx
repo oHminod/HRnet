@@ -163,10 +163,10 @@ const UpdateEmployeePopOver = ({
       style={{ top: popoverPosition.top, left: popoverPosition.left }}
     >
       {dynamicInput(entryKey)}
-      <button onClick={() => onClose()} className="hover:text-red-700">
+      <button onClick={() => onClose()} className="hover:text-red-500">
         <CircleX />
       </button>
-      <button onClick={handleClickCheck} className="hover:text-green-700">
+      <button onClick={handleClickCheck} className="hover:text-green-500">
         <CircleCheck />{" "}
       </button>
     </div>

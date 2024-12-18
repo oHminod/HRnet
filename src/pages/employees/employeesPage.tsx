@@ -64,11 +64,11 @@ const EmployeesPage = () => {
               setSearchTerm(e.target.value);
               handlePageChange(1); // Reset to first page after search
             }}
-            className="border rounded w-44 p-1 pr-7"
+            className="border-2 p-2 rounded-lg hover:bg-gray-100 w-44 pr-7"
           />
           {searchTerm && (
             <CircleX
-              className="absolute right-1 top-[5px] cursor-pointer hover:text-red-500"
+              className="absolute right-1 top-[10px] cursor-pointer hover:text-red-500"
               onClick={() => setSearchTerm("")}
             />
           )}
