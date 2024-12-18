@@ -25,7 +25,7 @@ const useEmployees = () => {
 
   const updateEmployee = (employee: EmployeeType) => {
     const updatedEmployees = employees.map((emp) => {
-      if (emp.firstName === employee.firstName) {
+      if (emp.id === employee.id) {
         return employee;
       }
       return emp;

@@ -14,6 +14,7 @@ export type EmployeeType = {
   state: string;
   zipCode: string;
   department: string;
+  id: string;
 };
 export type EmployeesType = EmployeeType[];
 

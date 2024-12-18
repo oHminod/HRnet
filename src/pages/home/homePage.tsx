@@ -5,6 +5,7 @@ import useEmployees from "../../hooks/useEmployees";
 import Modal from "./componants/modal";
 import Select from "../../components/Select";
 import DatePicker from "../../components/datePicker/DatePicker";
+import { v4 as uuidv4 } from "uuid";
 
 const HomePage = () => {
   const [selectedState, setSelectedState] = useState("");
@@ -28,6 +29,7 @@ const HomePage = () => {
       state: formData.get("state") as string,
       zipCode: formData.get("zipCode") as string,
       department: formData.get("department") as string,
+      id: uuidv4(),
     };
 
     if (form.state === "Choose State" || form.department === "") {
@@ -41,7 +43,7 @@ const HomePage = () => {
     addEmployee(form);
 
     e.currentTarget.reset();
-    setSelectedDepartment("");
+    setResetKey((prev) => prev + 1); // On force le remount
     setIsOpenModal(true);
   };
 
