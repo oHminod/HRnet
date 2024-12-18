@@ -42,15 +42,15 @@ const DatePicker = ({
           type="text"
           value={inputValue}
           placeholder={placeholder}
-          className="border border-gray-400 rounded-l px-4 py-2 w-full focus:outline-none"
+          className="border-2 border-r-1 p-2 rounded-l-lg px-4 py-2 w-full focus:outline-none hover:bg-gray-100"
           onChange={(e) => handleInputChange(e.target.value)}
         />
         <button
           type="button"
           onClick={toggleDatepicker}
-          className="border border-gray-400 border-l-0 bg-white rounded-r px-2 py-2 focus:outline-none"
+          className="border-2 border-l-0 p-2 rounded-r-lg px-2 py-2 focus:outline-none hover:bg-gray-100"
         >
-          <Calendar className="w-5 h-5 text-gray-500" />
+          <Calendar className="w-5 h-5 text-gray-400" />
         </button>
       </div>
       {isOpen && (

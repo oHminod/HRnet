@@ -61,7 +61,7 @@ const HomePage = () => {
                 <span>First Name</span>
                 <input
                   name="firstName"
-                  className="border-2 p-2 rounded-lg"
+                  className="border-2 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="John"
                   required
@@ -71,7 +71,7 @@ const HomePage = () => {
                 <span>Last Name</span>
                 <input
                   name="lastName"
-                  className="border-2 p-2 rounded-lg"
+                  className="border-2 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="Doe"
                   required
@@ -94,7 +94,7 @@ const HomePage = () => {
                 <span>Street</span>
                 <input
                   name="street"
-                  className="border-2 p-2 rounded-lg"
+                  className="border-2 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="123 Main St"
                   required
@@ -104,7 +104,7 @@ const HomePage = () => {
                 <span>City</span>
                 <input
                   name="city"
-                  className="border-2 p-2 rounded-lg"
+                  className="border-2 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="Springfield"
                   required
@@ -127,7 +127,7 @@ const HomePage = () => {
                 <span>Zip Code</span>
                 <input
                   name="zipCode"
-                  className="border-2 p-2 rounded-lg"
+                  className="border-2 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="62704"
                   required
@@ -151,14 +151,14 @@ const HomePage = () => {
           <div className="flex justify-center w-full">
             <button
               type="reset"
-              className="w-28 bg-gray-400 text-white p-2 mb-4 rounded-lg mr-4"
+              className="w-28 bg-gray-400 text-white p-2 mb-4 rounded-lg mr-4 hover:bg-gray-500"
               onClick={handleReset}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="w-28 bg-blue-500 text-white p-2 mb-4 rounded-lg"
+              className="w-28 bg-blue-500 text-white p-2 mb-4 rounded-lg hover:bg-blue-600"
             >
               Save
             </button>
