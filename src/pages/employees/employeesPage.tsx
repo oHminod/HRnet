@@ -134,7 +134,7 @@ const EmployeesPage = () => {
       <div className="flex flex-col sm:flex-row sm:justify-between items-end sm:items-center mt-4 gap-4">
         <button
           onClick={resetSort}
-          className="bg-blue-500 text-white p-2 rounded-lg order-2 sm:order-1"
+          className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg order-2 sm:order-1"
         >
           Reset initial order
         </button>
@@ -145,7 +145,7 @@ const EmployeesPage = () => {
             className={`w-20 p-2 rounded-l-lg ${
               currentPage === 1
                 ? "bg-gray-300 hover:cursor-not-allowed"
-                : "bg-blue-500 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-600"
             }`}
           >
             Previous
@@ -178,7 +178,7 @@ const EmployeesPage = () => {
             className={`w-20 p-2 rounded-r-lg ${
               currentPage === totalPages || totalPages === 0
                 ? "bg-gray-300 hover:cursor-not-allowed"
-                : "bg-blue-500 text-white"
+                : "bg-blue-500 text-white hover:bg-blue-600"
             }`}
           >
             Next

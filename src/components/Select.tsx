@@ -64,7 +64,7 @@ const CustomSelect = <T extends string | number>({
         </svg>
       </div>
       {isOpen && (
-        <ul className="absolute z-10 mt-1 w-full bg-white border border-gray-400 rounded shadow max-h-60 overflow-auto">
+        <ul className="absolute z-10 mt-1 w-full bg-white border-2 p-2 rounded-lg shadow max-h-60 overflow-auto">
           {options.map((option, index) => (
             <li
               key={index}

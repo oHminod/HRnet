@@ -54,7 +54,7 @@ const DatePicker = ({
         </button>
       </div>
       {isOpen && (
-        <div className="absolute z-10 mt-1 w-80 bg-white border border-gray-400 rounded shadow p-2">
+        <div className="absolute z-10 mt-1 w-80 bg-white border-2 p-2 rounded-lg shadow">
           <div className="flex items-center justify-between mb-2">
             <button
               type="button"
