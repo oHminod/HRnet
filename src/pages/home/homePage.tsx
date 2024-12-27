@@ -2,9 +2,13 @@
 import { useState } from "react";
 import { departmentsList, statesList } from "../../utils/data";
 import useEmployees from "../../hooks/useEmployees";
-import Modal from "./componants/modal";
-import Select from "../../components/Select";
-import DatePicker from "../../components/datePicker/DatePicker";
+// import Modal from "./componants/modal";
+// import Select from "../../components/Select";
+import {
+  DatePicker,
+  Modal,
+  CustomSelect as Select,
+} from "hrnet-components-ohm";
 import { v4 as uuidv4 } from "uuid";
 
 const HomePage = () => {
@@ -81,7 +85,13 @@ const HomePage = () => {
 
   return (
     <>
-      {isOpenModal && <Modal setIsOpenModal={setIsOpenModal} />}
+      {isOpenModal && (
+        <Modal
+          title="Success"
+          message="Employee Created!"
+          setIsOpenModal={setIsOpenModal}
+        />
+      )}
       <div className="border-2 p-6 rounded-xl">
         <h2 className="text-center text-lg font-semibold">Create employee</h2>
         <form onSubmit={handleSubmit}>

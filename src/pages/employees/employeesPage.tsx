@@ -5,6 +5,7 @@ import UpdateEmployeePopOver from "./components/updateEmployeePopOver";
 import { CircleX } from "lucide-react";
 import Select from "../../components/Select";
 import { useEmployeesPage } from "./components/useEmployeesPage";
+import Table from "./components/Table";
 
 export type Entry = {
   label: string;
@@ -76,7 +77,14 @@ const EmployeesPage = () => {
       </div>
 
       <div className="overflow-x-auto xl:overflow-x-visible relative">
-        <table className="border-collapse table-auto w-full text-sm">
+        <Table
+          entries={entries}
+          onSort={onSort}
+          getSortIcon={getSortIcon}
+          currentEmployees={currentEmployees}
+          handleCellClick={handleCellClick}
+        />
+        {/* <table className="border-collapse table-auto w-full text-sm">
           <thead className="bg-slate-200">
             <tr>
               {entries.map((entry) => (
@@ -119,7 +127,7 @@ const EmployeesPage = () => {
               </tr>
             )}
           </tbody>
-        </table>
+        </table> */}
       </div>
       {popoverVisible && selectedEmployee && selectedField && (
         <UpdateEmployeePopOver
