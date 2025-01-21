@@ -3,9 +3,10 @@ import { EmployeeType } from "../../utils/employeesContext";
 import { entries } from "../../utils/data";
 import UpdateEmployeePopOver from "./components/updateEmployeePopOver";
 import { CircleX } from "lucide-react";
-import Select from "../../components/Select";
+// import Select from "../../components/Select";
 import { useEmployeesPage } from "./components/useEmployeesPage";
 import Table from "./components/Table";
+import { CustomSelect } from "hrnet-components-ohm";
 
 export type Entry = {
   label: string;
@@ -41,15 +42,22 @@ const EmployeesPage = () => {
       {/* Barre de recherche */}
       <div className="flex flex-wrap gap-4 justify-between items-center mb-4">
         <div>
-          <label htmlFor="itemsPerPage" className="mr-2">
-            Show
+          <label htmlFor="itemsPerPage">
+            Show{"  "}
+            <CustomSelect
+              defaultValue={itemsPerPage}
+              placeholder={itemsPerPage.toString()}
+              onOptionChange={(value) => handleItemsPerPageChange(value)}
+              options={[1, 2, 10, 25, 50, 100]}
+              name="itemsPerPage"
+            />
           </label>
-          <Select
+          {/* <Select
             defaultValue={itemsPerPage}
             placeholder={itemsPerPage.toString()}
             onOptionChange={(value) => handleItemsPerPageChange(value)}
             options={[1, 2, 10, 25, 50, 100]}
-          />
+          /> */}
           <span className="ml-2">entries</span>
         </div>
         {/* Champ de recherche */}
@@ -65,7 +73,7 @@ const EmployeesPage = () => {
               setSearchTerm(e.target.value);
               handlePageChange(1); // Reset to first page after search
             }}
-            className="border-2 p-2 rounded-lg hover:bg-gray-100 w-44 pr-7"
+            className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100 w-44 pr-7"
           />
           {searchTerm && (
             <CircleX
@@ -142,7 +150,7 @@ const EmployeesPage = () => {
       <div className="flex flex-col sm:flex-row sm:justify-between items-end sm:items-center mt-4 gap-4">
         <button
           onClick={resetSort}
-          className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg order-2 sm:order-1"
+          className="bg-blue-600 hover:bg-blue-800 text-white p-2 rounded-lg order-2 sm:order-1"
         >
           Reset initial order
         </button>
@@ -153,7 +161,7 @@ const EmployeesPage = () => {
             className={`w-20 p-2 rounded-l-lg ${
               currentPage === 1
                 ? "bg-gray-300 hover:cursor-not-allowed"
-                : "bg-blue-500 text-white hover:bg-blue-600"
+                : "bg-blue-600 text-white hover:bg-blue-700"
             }`}
           >
             Previous
@@ -165,7 +173,7 @@ const EmployeesPage = () => {
                 onClick={() => handlePageChange(item)}
                 className={`p-2 min-w-10 ${
                   currentPage === item
-                    ? "bg-blue-500 text-white"
+                    ? "bg-blue-600 text-white"
                     : "bg-gray-200 text-gray-700 hover:bg-gray-300"
                 }`}
               >

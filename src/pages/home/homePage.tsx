@@ -4,11 +4,7 @@ import { departmentsList, statesList } from "../../utils/data";
 import useEmployees from "../../hooks/useEmployees";
 // import Modal from "./componants/modal";
 // import Select from "../../components/Select";
-import {
-  DatePicker,
-  Modal,
-  CustomSelect as Select,
-} from "hrnet-components-ohm";
+import { DatePicker, Modal, CustomSelect } from "hrnet-components-ohm";
 import { v4 as uuidv4 } from "uuid";
 
 const HomePage = () => {
@@ -101,7 +97,7 @@ const HomePage = () => {
                 <span>First Name</span>
                 <input
                   name="firstName"
-                  className="border-2 p-2 rounded-lg hover:bg-gray-100"
+                  className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="John"
                   required
@@ -111,7 +107,7 @@ const HomePage = () => {
                 <span>Last Name</span>
                 <input
                   name="lastName"
-                  className="border-2 p-2 rounded-lg hover:bg-gray-100"
+                  className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="Doe"
                   required
@@ -134,7 +130,7 @@ const HomePage = () => {
                 <span>Street</span>
                 <input
                   name="street"
-                  className="border-2 p-2 rounded-lg hover:bg-gray-100"
+                  className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="123 Main St"
                   required
@@ -144,7 +140,7 @@ const HomePage = () => {
                 <span>City</span>
                 <input
                   name="city"
-                  className="border-2 p-2 rounded-lg hover:bg-gray-100"
+                  className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="Springfield"
                   required
@@ -154,7 +150,7 @@ const HomePage = () => {
             <div className="flex flex-wrap gap-4">
               <label className="flex flex-wrap items-center gap-2">
                 <span>State</span>
-                <Select
+                <CustomSelect
                   options={statesList}
                   placeholder="Choose State"
                   name="state"
@@ -167,7 +163,7 @@ const HomePage = () => {
                 <span>Zip Code</span>
                 <input
                   name="zipCode"
-                  className="border-2 p-2 rounded-lg hover:bg-gray-100"
+                  className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100"
                   type="text"
                   placeholder="62704"
                   value={zipCode}
@@ -179,7 +175,7 @@ const HomePage = () => {
             <h3 className="font-semibold pt-8">Department</h3>
             <label className="flex flex-wrap items-center gap-2">
               <span>Department</span>
-              <Select
+              <CustomSelect
                 options={departmentsList}
                 placeholder="Choose Department"
                 name="department"
@@ -193,14 +189,14 @@ const HomePage = () => {
           <div className="flex justify-center w-full">
             <button
               type="reset"
-              className="w-28 bg-gray-400 text-white p-2 mb-4 rounded-lg mr-4 hover:bg-gray-500"
+              className="w-28 bg-gray-600 text-white p-2 mb-4 rounded-lg mr-4 hover:bg-gray-800"
               onClick={handleReset}
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="w-28 bg-blue-500 text-white p-2 mb-4 rounded-lg hover:bg-blue-600"
+              className="w-28 bg-blue-600 text-white p-2 mb-4 rounded-lg hover:bg-blue-800"
             >
               Save
             </button>
