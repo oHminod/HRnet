@@ -1,50 +1,69 @@
-# React + TypeScript + Vite
+# HRnet
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+HRnet est une application de gestion des ressources humaines développée avec React, TypeScript et Vite. Elle permet de gérer les employés, leurs informations et leurs départements.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Pour installer le projet, suivez les étapes ci-dessous :
 
-## Expanding the ESLint configuration
+1. Clonez le dépôt :
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+   ```sh
+   git clone https://github.com/oHminod/HRNet.git
+   ```
 
-- Configure the top-level `parserOptions` property like this:
+2. Accédez au répertoire du projet :
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+   ```sh
+   cd HRnet
+   ```
+
+3. Installez les dépendances :
+
+   ```sh
+   npm install
+   ```
+
+4. Démarrez le serveur de développement :
+   ```sh
+   npm run dev
+   ```
+
+## Utilisation
+
+### Composants principaux
+
+- `DatePicker`: Un composant de sélection de date.
+- `Select`: Un composant de sélection personnalisé.
+- `Header`: Le composant d'en-tête de l'application.
+- `Layout`: Le composant de mise en page principale.
+
+### Hooks
+
+- `useEmployees`: Un hook pour gérer les employés.
+- `useLocalStorage`: Un hook pour gérer le stockage local.
+
+### Pages
+
+- `HomePage`: La page d'accueil pour créer un nouvel employé.
+- `EmployeesPage`: La page pour afficher et gérer les employés existants.
+
+### Utilitaires
+
+- `data.ts`: Contient les listes de départements et d'états.
+- `employeesContext.tsx`: Fournit le contexte pour les employés.
+- `routes.tsx`: Définit les routes de l'application.
+
+## Déploiement
+
+Pour construire le projet pour la production, exécutez :
+
+```sh
+npm run build
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Pour prévisualiser le projet avant de le déployer, exécutez :
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```sh
+npm run preview
 ```
