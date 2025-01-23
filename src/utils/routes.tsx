@@ -18,15 +18,14 @@ const Router = () => {
           path: "employees",
           element: <EmployeesPage />,
         },
-        // { path: "profile", element: <UserPage /> },
-        // {
-        //   path: "*",
-        //   element: (
-        //     <ErrorPage
-        //       error={{ status: 404, message: "That page doesn't exist..." }}
-        //     />
-        //   ),
-        // },
+        {
+          path: "*",
+          element: (
+            <div className="flex justify-center items-center h-full">
+              <h2 className="text-4xl">404, That page doesn't exist...</h2>
+            </div>
+          ),
+        },
       ],
     },
   ]);

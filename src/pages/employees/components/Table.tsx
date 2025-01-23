@@ -1,24 +1,6 @@
 import { EmployeeType } from "../../../utils/employeesContext";
 import { Entry } from "../employeesPage";
 
-// type EmployeeType = {
-//   firstName: string;
-//   lastName: string;
-//   dateOfBirth: string;
-//   startDate: string;
-//   street: string;
-//   city: string;
-//   state: string;
-//   zipCode: string;
-//   department: string;
-//   id: string;
-// };
-
-// export type Entry = {
-//   label: string;
-//   key: keyof EmployeeType;
-// };
-
 type TableProps = {
   entries: Entry[];
   onSort: (key: keyof EmployeeType) => void;

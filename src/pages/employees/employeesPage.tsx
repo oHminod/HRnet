@@ -3,7 +3,6 @@ import { EmployeeType } from "../../utils/employeesContext";
 import { entries } from "../../utils/data";
 import UpdateEmployeePopOver from "./components/updateEmployeePopOver";
 import { CircleX } from "lucide-react";
-// import Select from "../../components/Select";
 import { useEmployeesPage } from "./components/useEmployeesPage";
 import Table from "./components/Table";
 import { CustomSelect } from "hrnet-components-ohm";
@@ -52,12 +51,6 @@ const EmployeesPage = () => {
               name="itemsPerPage"
             />
           </label>
-          {/* <Select
-            defaultValue={itemsPerPage}
-            placeholder={itemsPerPage.toString()}
-            onOptionChange={(value) => handleItemsPerPageChange(value)}
-            options={[1, 2, 10, 25, 50, 100]}
-          /> */}
           <span className="ml-2">entries</span>
         </div>
         {/* Champ de recherche */}
@@ -92,50 +85,6 @@ const EmployeesPage = () => {
           currentEmployees={currentEmployees}
           handleCellClick={handleCellClick}
         />
-        {/* <table className="border-collapse table-auto w-full text-sm">
-          <thead className="bg-slate-200">
-            <tr>
-              {entries.map((entry) => (
-                <th
-                  key={entry.key}
-                  onClick={() => onSort(entry.key)}
-                  className="border-b font-medium pl-8 py-4 text-slate-800 text-left cursor-pointer"
-                >
-                  {entry.label}
-                  {getSortIcon(entry.key)}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {currentEmployees.length > 0 ? (
-              currentEmployees.map((employee, index) => (
-                <tr className="hover:bg-slate-50" key={index}>
-                  {entries.map((entry) => (
-                    <td
-                      key={entry.key}
-                      className="border-b border-slate-100 p-4 pl-8 text-slate-500 cursor-pointer"
-                      onClick={(e) => handleCellClick(e, employee, entry.key)}
-                    >
-                      {entry.key === "dateOfBirth" || entry.key === "startDate"
-                        ? employee[entry.key].split("-").reverse().join("/")
-                        : employee[entry.key]}
-                    </td>
-                  ))}
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan={entries.length}
-                  className="text-center p-4 text-slate-500"
-                >
-                  No employees found.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table> */}
       </div>
       {popoverVisible && selectedEmployee && selectedField && (
         <UpdateEmployeePopOver

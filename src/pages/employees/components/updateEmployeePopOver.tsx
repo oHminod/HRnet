@@ -4,7 +4,7 @@ import useEmployees from "../../../hooks/useEmployees";
 import { EmployeeType } from "../../../utils/employeesContext";
 import { CircleCheck, CircleX } from "lucide-react";
 import { departmentsList, statesList } from "../../../utils/data";
-import DatePicker from "../../../components/datePicker/DatePicker";
+import { CustomSelect, DatePicker } from "hrnet-components-ohm";
 
 interface UpdateEmployeePopOverProps {
   employee: EmployeeType;
@@ -100,7 +100,12 @@ const UpdateEmployeePopOver = ({
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>
+      | string
   ) => {
+    if (typeof e === "string") {
+      setInputBuffer(e);
+      return;
+    }
     setInputBuffer(e.target.value);
   };
 
@@ -114,17 +119,13 @@ const UpdateEmployeePopOver = ({
   const dynamicInput = (entryKey: keyof EmployeeType) => {
     if (entryKey === "department") {
       return (
-        <select
-          value={inputBuffer}
-          onChange={handleInputChange}
-          className="border p-1 rounded"
-        >
-          {departmentsList.map((department) => (
-            <option key={department} value={department}>
-              {department}
-            </option>
-          ))}
-        </select>
+        <CustomSelect
+          options={departmentsList}
+          placeholder="Choose Department"
+          name="department"
+          defaultValue={inputBuffer}
+          onOptionChange={(value) => handleInputChange(value)}
+        />
       );
     }
     if (entryKey === "dateOfBirth" || entryKey === "startDate") {
@@ -137,17 +138,13 @@ const UpdateEmployeePopOver = ({
     }
     if (entryKey === "state") {
       return (
-        <select
-          value={inputBuffer}
-          onChange={handleInputChange}
-          className="border p-1 rounded"
-        >
-          {statesList.map((state) => (
-            <option key={state} value={state}>
-              {state}
-            </option>
-          ))}
-        </select>
+        <CustomSelect
+          options={statesList}
+          placeholder="Choose State"
+          name="state"
+          defaultValue={inputBuffer}
+          onOptionChange={(value) => handleInputChange(value)}
+        />
       );
     }
     if (entryKey === "zipCode") {

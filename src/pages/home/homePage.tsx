@@ -2,8 +2,6 @@
 import { useState } from "react";
 import { departmentsList, statesList } from "../../utils/data";
 import useEmployees from "../../hooks/useEmployees";
-// import Modal from "./componants/modal";
-// import Select from "../../components/Select";
 import { DatePicker, Modal, CustomSelect } from "hrnet-components-ohm";
 import { v4 as uuidv4 } from "uuid";
 
