@@ -143,7 +143,7 @@ const EmployeesPage = () => {
             className={`w-20 p-2 rounded-r-lg ${
               currentPage === totalPages || totalPages === 0
                 ? "bg-gray-300 hover:cursor-not-allowed"
-                : "bg-blue-500 text-white hover:bg-blue-600"
+                : "bg-blue-600 text-white hover:bg-blue-700"
             }`}
           >
             Next
