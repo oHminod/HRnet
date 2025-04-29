@@ -6,6 +6,7 @@ import { CircleX } from "lucide-react";
 import { useEmployeesPage } from "./components/useEmployeesPage";
 import Table from "./components/Table";
 import { CustomSelect } from "hrnet-components-ohm";
+import { useEffect, useState } from "react";
 
 export type Entry = {
   label: string;
@@ -33,6 +34,23 @@ const EmployeesPage = () => {
     setSearchTerm,
     closePopover,
   } = useEmployeesPage({ entries });
+
+  const [amountOfYScroll, setAmountOfYScroll] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setAmountOfYScroll(document.documentElement.scrollTop);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  // const amountOfYScroll = document.documentElement.scrollTop;
+  // console.log("amountOfYScroll", amountOfYScroll);
 
   return (
     <>
@@ -93,6 +111,7 @@ const EmployeesPage = () => {
           cursorPosition={cursorPosition}
           visible={popoverVisible}
           onClose={closePopover} // Prop pour fermer le popover
+          amountOfYScroll={amountOfYScroll}
         />
       )}
       {/* Pagination controls */}

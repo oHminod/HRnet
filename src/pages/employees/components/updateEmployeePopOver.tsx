@@ -12,6 +12,7 @@ interface UpdateEmployeePopOverProps {
   cursorPosition: { x: number; y: number };
   visible: boolean;
   onClose: () => void;
+  amountOfYScroll: number;
 }
 
 const UpdateEmployeePopOver = ({
@@ -20,6 +21,7 @@ const UpdateEmployeePopOver = ({
   cursorPosition,
   visible,
   onClose,
+  amountOfYScroll,
 }: UpdateEmployeePopOverProps) => {
   const { updateEmployee } = useEmployees();
   const [inputBuffer, setInputBuffer] = useState(employee[entryKey]);
@@ -28,7 +30,7 @@ const UpdateEmployeePopOver = ({
     top: number;
     left: number;
   }>({
-    top: cursorPosition.y,
+    top: cursorPosition.y - amountOfYScroll,
     left: cursorPosition.x,
   });
 
@@ -90,10 +92,11 @@ const UpdateEmployeePopOver = ({
       }
 
       setPopoverPosition({
-        top: cursorPosition.y,
+        top: cursorPosition.y + amountOfYScroll,
         left: newLeft,
       });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cursorPosition, visible]);
 
   const handleInputChange = (

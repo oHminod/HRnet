@@ -4,6 +4,7 @@ import { departmentsList, statesList } from "../../utils/data";
 import useEmployees from "../../hooks/useEmployees";
 import { DatePicker, Modal, CustomSelect } from "hrnet-components-ohm";
 import { v4 as uuidv4 } from "uuid";
+import Input from "../../components/input";
 
 const HomePage = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -88,26 +89,8 @@ const HomePage = () => {
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col space-y-4 py-10">
             <div className="flex flex-wrap gap-4">
-              <label className="flex flex-wrap items-center gap-2">
-                <span>First Name</span>
-                <input
-                  name="firstName"
-                  className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100"
-                  type="text"
-                  placeholder="John"
-                  required
-                />
-              </label>
-              <label className="flex flex-wrap items-center gap-2">
-                <span>Last Name</span>
-                <input
-                  name="lastName"
-                  className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100"
-                  type="text"
-                  placeholder="Doe"
-                  required
-                />
-              </label>
+              <Input label="First Name" name="firstName" placeholder="John" />
+              <Input label="Last Name" name="lastName" placeholder="Doe" />
             </div>
             <div className="flex flex-wrap gap-4">
               <label className="flex flex-wrap items-center gap-2">
@@ -121,26 +104,8 @@ const HomePage = () => {
             </div>
             <h3 className="font-semibold pt-8">Address</h3>
             <div className="flex flex-wrap gap-4">
-              <label className="flex flex-wrap items-center gap-2">
-                <span>Street</span>
-                <input
-                  name="street"
-                  className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100"
-                  type="text"
-                  placeholder="123 Main St"
-                  required
-                />
-              </label>
-              <label className="flex flex-wrap items-center gap-2">
-                <span>City</span>
-                <input
-                  name="city"
-                  className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100"
-                  type="text"
-                  placeholder="Springfield"
-                  required
-                />
-              </label>
+              <Input label="Street" name="street" placeholder="123 Main St" />
+              <Input label="City" name="city" placeholder="Springfield" />
             </div>
             <div className="flex flex-wrap gap-4">
               <label className="flex flex-wrap items-center gap-2">
@@ -152,18 +117,13 @@ const HomePage = () => {
                   key={`select1-${resetKey}`}
                 />
               </label>
-              <label className="flex flex-wrap items-center gap-2">
-                <span>Zip Code</span>
-                <input
-                  name="zipCode"
-                  className="border-2 border-gray-400 p-2 rounded-lg hover:bg-gray-100"
-                  type="text"
-                  placeholder="62704"
-                  value={zipCode}
-                  onChange={handleZipCodeChange}
-                  required
-                />
-              </label>
+              <Input
+                label="Zip Code"
+                name="zipCode"
+                placeholder="62704"
+                value={zipCode}
+                onChange={handleZipCodeChange}
+              />
             </div>
             <h3 className="font-semibold pt-8">Department</h3>
             <label className="flex flex-wrap items-center gap-2">
