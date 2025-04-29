@@ -1,10 +1,12 @@
 import { EmployeeType } from "../../../utils/employeesContext";
 import { Entry } from "../employeesPage";
 
+export type sortIconType = " ▲" | " ▼" | " •";
+
 type TableProps = {
   entries: Entry[];
   onSort: (key: keyof EmployeeType) => void;
-  getSortIcon: (key: keyof EmployeeType) => " ▲" | " ▼" | " ▾";
+  getSortIcon: (key: keyof EmployeeType) => sortIconType;
   currentEmployees: EmployeeType[];
   handleCellClick: (
     e: React.MouseEvent<HTMLTableCellElement, MouseEvent>,

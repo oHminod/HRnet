@@ -21,7 +21,7 @@ const Router = () => {
         {
           path: "*",
           element: (
-            <div className="flex justify-center items-center h-full">
+            <div className="flex justify-center items-center flex-1">
               <h2 className="text-4xl">404, That page doesn't exist...</h2>
             </div>
           ),

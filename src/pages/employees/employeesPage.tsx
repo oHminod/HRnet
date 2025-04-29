@@ -96,7 +96,7 @@ const EmployeesPage = () => {
         />
       )}
       {/* Pagination controls */}
-      <div className="flex flex-col sm:flex-row sm:justify-between items-end sm:items-center mt-4 gap-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between items-end sm:items-center py-4 gap-4">
         <button
           onClick={resetSort}
           className="bg-blue-600 hover:bg-blue-800 text-white p-2 rounded-lg order-2 sm:order-1"

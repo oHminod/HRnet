@@ -84,7 +84,7 @@ export const useEmployeesPage = ({ entries }: UseEmployeesPageProps) => {
     if (sortConfig.key === key) {
       return sortConfig.direction === "ascending" ? " ▲" : " ▼";
     } else {
-      return " ▾";
+      return " •";
     }
   };
 

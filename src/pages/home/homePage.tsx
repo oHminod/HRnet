@@ -6,8 +6,6 @@ import { DatePicker, Modal, CustomSelect } from "hrnet-components-ohm";
 import { v4 as uuidv4 } from "uuid";
 
 const HomePage = () => {
-  const [selectedState, setSelectedState] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState("");
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [error, setError] = useState("");
   const { addEmployee } = useEmployees();
@@ -31,7 +29,7 @@ const HomePage = () => {
       id: uuidv4(),
     };
 
-    if (form.state === "Choose State" || form.department === "") {
+    if (form.state === "" || form.department === "") {
       setError("Please select a state and department");
       return;
     }
@@ -60,8 +58,7 @@ const HomePage = () => {
     addEmployee(form);
 
     e.currentTarget.reset();
-    setZipCode("");
-    setResetKey((prev) => prev + 1); // On force le remount
+    handleReset();
     setIsOpenModal(true);
   };
 
@@ -152,8 +149,6 @@ const HomePage = () => {
                   options={statesList}
                   placeholder="Choose State"
                   name="state"
-                  defaultValue={selectedState}
-                  onOptionChange={(value) => setSelectedState(value)}
                   key={`select1-${resetKey}`}
                 />
               </label>
@@ -177,8 +172,6 @@ const HomePage = () => {
                 options={departmentsList}
                 placeholder="Choose Department"
                 name="department"
-                defaultValue={selectedDepartment}
-                onOptionChange={(value) => setSelectedDepartment(value)}
                 key={`select2-${resetKey}`}
               />
             </label>
