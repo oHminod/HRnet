@@ -49,9 +49,6 @@ const EmployeesPage = () => {
     };
   }, []);
 
-  // const amountOfYScroll = document.documentElement.scrollTop;
-  // console.log("amountOfYScroll", amountOfYScroll);
-
   return (
     <>
       <h2 className="text-center text-lg font-semibold pb-8">Employees</h2>
@@ -110,7 +107,7 @@ const EmployeesPage = () => {
           entryKey={selectedField}
           cursorPosition={cursorPosition}
           visible={popoverVisible}
-          onClose={closePopover} // Prop pour fermer le popover
+          onClose={closePopover}
           amountOfYScroll={amountOfYScroll}
         />
       )}
