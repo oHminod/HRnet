@@ -9,14 +9,36 @@ type SortConfig = {
   direction: SortDirection;
 };
 
+type AugmentedEntry = {
+  label: string;
+  key: keyof AugmentedEmployeeType;
+};
+
 type UseEmployeesPageProps = {
   entries: Entry[];
 };
 
+type AugmentedEmployeeType = EmployeeType & {
+  searchabelDateOfBirth: string;
+  searchabelStartDate: string;
+};
+
 export const useEmployeesPage = ({ entries }: UseEmployeesPageProps) => {
   const { employees } = useEmployees();
+  const augmentedEmployees = useMemo(() => {
+    return employees.map((employee) => ({
+      ...employee,
+      searchabelDateOfBirth: employee.dateOfBirth
+        .split("-")
+        .reverse()
+        .join("/"),
+      searchabelStartDate: employee.startDate.split("-").reverse().join("/"),
+    }));
+  }, [employees]);
 
-  const [sortedEmployees, setSortedEmployees] = useState<EmployeeType[]>([]);
+  const [sortedEmployees, setSortedEmployees] = useState<
+    AugmentedEmployeeType[]
+  >([]);
   const [sortConfig, setSortConfig] = useState<SortConfig>({
     key: null,
     direction: "",
@@ -40,15 +62,15 @@ export const useEmployeesPage = ({ entries }: UseEmployeesPageProps) => {
   const [popoverVisible, setPopoverVisible] = useState<boolean>(false);
 
   useEffect(() => {
-    setSortedEmployees(employees);
-  }, [employees]);
+    setSortedEmployees(augmentedEmployees);
+  }, [augmentedEmployees]);
 
   const onSort = (key: keyof EmployeeType) => {
     let direction: SortDirection = "ascending";
     if (sortConfig.key === key && sortConfig.direction === "ascending") {
       direction = "descending";
     }
-    const sorted = [...employees].sort((a, b) => {
+    const sorted = [...augmentedEmployees].sort((a, b) => {
       if (key === "dateOfBirth" || key === "startDate") {
         const dateA = new Date(a[key]);
         const dateB = new Date(b[key]);
@@ -75,7 +97,7 @@ export const useEmployeesPage = ({ entries }: UseEmployeesPageProps) => {
   };
 
   const resetSort = () => {
-    setSortedEmployees(employees);
+    setSortedEmployees(augmentedEmployees);
     setSortConfig({ key: null, direction: "" });
     setCurrentPage(1);
   };
@@ -90,8 +112,19 @@ export const useEmployeesPage = ({ entries }: UseEmployeesPageProps) => {
 
   // Filtrage
   const filteredEmployees = useMemo(() => {
+    const augmentedEntries: AugmentedEntry[] = [
+      ...entries,
+      {
+        label: "searchableDoB",
+        key: "searchabelDateOfBirth",
+      },
+      {
+        label: "searchableStartDate",
+        key: "searchabelStartDate",
+      },
+    ];
     return sortedEmployees.filter((employee) =>
-      entries.some((entry) =>
+      augmentedEntries.some((entry) =>
         employee[entry.key]
           .toString()
           .toLowerCase()
