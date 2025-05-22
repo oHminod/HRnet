@@ -65,6 +65,7 @@ const HomePage = () => {
 
   const handleReset = () => {
     setZipCode("");
+    setError("");
     setResetKey((prev) => prev + 1); // On force le remount
   };
 
